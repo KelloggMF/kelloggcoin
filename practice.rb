@@ -28,57 +28,30 @@ blockchain = [
 
 # 👇👇👇 Your code HERE 👇👇👇
 
-ben_wallet = 0
-brian_wallet = 0
-evan_wallet = 0
-anthony_wallet = 0
-index = 0
+wallets = [
+  { "name" => "ben", "balance" => 0 },
+  { "name" => "brian", "balance" => 0 },
+  { "name" => "evan", "balance" => 0 },
+  { "name" => "anthony", "balance" => 0 }
+]
 
-loop do
-  if index == blockchain.size
-    break
+
+for blockchain in blockchain
+  sender = blockchain["from_user"]
+  banker = blockchain["to_user"]
+  amount = blockchain["amount"]
+
+  for wallet in wallets
+  if wallet["name"] == sender
+    wallet["balance"] = wallet["balance"] - amount
   end
 
-  sender = blockchain[index]["from_user"]
-  banker = blockchain[index]["to_user"]
-  amount = blockchain[index]["amount"]
-
-  if sender == "ben"
-    ben_wallet = ben_wallet - amount
+  if wallet["name"] == banker
+    wallet["balance"] = wallet["balance"] + amount
   end
-
-  if banker == "ben"
-    ben_wallet = ben_wallet + amount
-  end
-
-  if sender == "brian"
-    brian_wallet = brian_wallet - amount
-  end
-
-  if banker == "brian"
-    brian_wallet = brian_wallet + amount
-  end
-
-  if sender == "evan"
-    evan_wallet = evan_wallet - amount
-  end
-
-  if banker == "evan"
-    evan_wallet = evan_wallet + amount
-  end
-
-  if sender == "anthony"
-    anthony_wallet = anthony_wallet - amount
-  end
-
-  if banker == "anthony"
-    anthony_wallet = anthony_wallet + amount
-  end
-
-  index =  index + 1
+end
 end
 
-puts "Ben's KelloggCoin balance is $#{ben_wallet}"
-puts "Brian's KelloggCoin balance is $#{brian_wallet}"
-puts "Evan's KelloggCoin balance is $#{evan_wallet}"
-puts "Anthony's KelloggCoin balance is $#{anthony_wallet}"
+for wallet in wallets 
+  puts "#{wallet["name"].capitalize}'s KelloggCoin balance is #{wallet["balance"]}"
+end
